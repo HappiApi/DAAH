@@ -7,22 +7,20 @@
       <ul class="breadcrumb__list">
         <li class="breadcrumb__item"><a href="lists.html">Lists</a>
         </li>
-      <!--      <li> <a href="" style="float:left">Logout</a>
-  </li> -->
+        <li class="breadbrumb__item">{{list_name}}
+        </li>
       </ul>
       <a href="" style="float: right;">Logout</a>
     </nav>
 
     <div class="lists">
       <ul>
-      {% for list in lists %}
-        {{ list.name }}
+      {% for item in items %}
+        {{ item.name }}
       {% endfor %}
-      <li><a href="">Add List</a></li>
+      <li><a href="">Add Item</a></li>
       </ul>
     </div>
-
-
   </div>
 </div>
 
