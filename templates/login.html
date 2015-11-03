@@ -9,15 +9,15 @@
       </a>
 
     </header>
-    <div class="hero" style="background-image: url('http://lorempixel.com/1400/500')">
-      <div class="hero__content">
-        <div class="hero__body hero__body--background">
-          <h2 class="as-h5 hero__sub"><a href="">Page section</a></h2>
-          <h1 class="hero__title">Page title</h1>
-          <p class="hero__blurb">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quasi quos saepe, illum vero cumque. Voluptatem, nihil similique consectetur, ad possimus provident praesentium labore nemo soluta voluptas a.</p>
-        </div>
-      </div>
+    <div class="hero hero__content">
+          <h2 class="hero__title">Login</h2>
+          <form class="login" method="POST">
+            <input id="username" class="login" type="text" name="username" placeholder="Username" onfocus=""><br>
+            <input id="password" class="login" type="password" name="password" placeholder="Password" onfocus=""><br>
+            <button class="login" type="submit" id="login-button">Login</button>
+          </form>
+          <button class="login">Sign Up</button>
     </div>
 
   </div>
-</html>
+{% include 'footer.html' %}
