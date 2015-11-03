@@ -11,14 +11,19 @@
         </li>
       </ul>
       <a href="" style="float: right;">Logout</a>
+      <a href="" style="float: right; padding-right: 50px;">Add Item</a>
     </nav>
 
-    <div class="lists">
+    <div class="items">
       <ul>
       {% for item in items %}
-        {{ item.name }}
+        <li class="item">
+          <a class="item-name" href>{{ list.name }}</a>
+          <a class="item-edit" href="">Edit</a>
+          <a class="item-delete" href="">Delete</a>
+          <a class="item-done" href="">Done</a>
+        </li>
       {% endfor %}
-      <li><a href="">Add Item</a></li>
       </ul>
     </div>
   </div>

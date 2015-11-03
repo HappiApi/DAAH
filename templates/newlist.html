@@ -1,0 +1,28 @@
+{% include 'header.html' %}
+
+<div class="site-content wrapper">
+  <div class="hero hero__content">
+
+    <nav class="breadcrumb clearfix">
+      <ul class="breadcrumb__list">
+        <li class="breadcrumb__item" style="font-size: 20px;"><a href="">Lists</a>
+        </li>
+        <li class=breadcrumb__item style="font-size: 20px;"> {{ title }}
+        </li>
+      </ul>
+      <a href="" style="float: right;">Logout</a>
+      <a href="" style="float: right; padding-right: 51px;">Cancel</a>
+    </nav>
+
+    <form  id="new_list" action="" method="post">
+      <fieldset class="form__group form__group--prepend">
+          <span>Name of the new list:</span>
+          <input class="form__control" type="text" id="text">
+      </fieldset>
+      <input type="submit" value="Add List">
+    </form>
+
+  </div>
+</div>
+
+{% include 'footer.html' %}
