@@ -1,0 +1,34 @@
+{% include 'header.html' %}
+
+<div class="site-content wrapper">
+  <div class="hero hero__content">
+
+    <nav class="breadcrumb clearfix">
+      <ul class="breadcrumb__list">
+        <li class="breadcrumb__item" style="font-size: 20px;">Lists
+        </li>
+        <li class="breadcrumb__item" style="font-size: 20px">
+          {{ list_name }}
+        </li>
+      </ul>
+      <a href="" style="float: right;">Logout</a>
+      <a href="" style="float: right; padding-right: 50px;">Add Item</a>
+    </nav>
+
+    <div class="lists">
+      <ul>
+      {% for list in lists %}
+        <li class="list">
+          <a class="list-name" href>{{ list.name }}</a>
+          <a class="list-edit" href="">Edit</a>
+          <a class="list-delete" href="">Delete</a>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+
+
+  </div>
+</div>
+
+{% include 'footer.html' %}
