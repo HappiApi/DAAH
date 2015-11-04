@@ -1,10 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask import session
+from flask.ext.session import Session
 import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
+app.config.from_object(__name__)
+Session(app)
 
 from models import *
 
@@ -20,11 +24,24 @@ def task_belongs_to_list(list_id, task_id):
     item = Task.query.filter_by(id = task_id).first()
     return list_id == item.list_id
 
-@app.route("/")
-def login():
+@app.route("/", methods=['GET'])
+def hello():
     if not session.get('user_id'):
         return render_template('login.html', title="Login")
     return redirect(url_for('/lists'))
+
+@app.route("/", methods=['POST'])
+def login():
+    if not request.form['username'] or not request.form['password']:
+        return render_template('login.html', title="Login")
+    else:
+        user = User.query.filter_by(username=request.form['username']).first()
+        if not user:
+            return render_template('login.html', title="Login", message='User not found')
+        if not user.authenticate(request.form['password']):
+            session['user_id'] = user.id
+            return redirect(url_for('/lists'))
+
 
 #CODE FOR LISTS
 
@@ -72,7 +89,7 @@ def edit_list():
         return render_template('lists.html', title='Lists', lists=lists, message='An error occured')
 
 #Displays tasks in list
-@app.route("lists/<list_id>", methods=['GET'])
+@app.route("/lists/<list_id>", methods=['GET'])
 def show_list():
     check_login()
     if list_belongs_to_user(list_id):
@@ -81,10 +98,10 @@ def show_list():
     else:
         return redirect(url_for('/lists'))
 
-@app.route("list/<list_id>/task/<task_id>", methods=['POST']):
+@app.route("/list/<list_id>/task/<task_id>", methods=['POST'])
 def delete_item():
     check_login()
-    if list_belongs_to_user(list_id) && task_belongs_to_list(list_id, task_id):
+    if list_belongs_to_user(list_id) and task_belongs_to_list(list_id, task_id):
         task = Task.query.filter_by(id = task_id).first()
         db.session.delete(task)
         db.session.commit()
@@ -94,10 +111,10 @@ def delete_item():
         tasks = Task.query.filter_by(list_id=list_id)
         return render_template('items.html', title='Tasks', items=tasks, message='An error occured')
 
-@app.route("list/<list_id>/task/<task_id>", methods=['POST']):
+@app.route("/list/<list_id>/task/<task_id>", methods=['POST'])
 def edit_item():
     check_login()
-    if list_belongs_to_user(list_id) && task_belongs_to_list(list_id, task_id):
+    if list_belongs_to_user(list_id) and task_belongs_to_list(list_id, task_id):
         task = Task.query.filter_by(id = task_id).first()
         task.name = request.form['list_name']
         db.session.commit()
