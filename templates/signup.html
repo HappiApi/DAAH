@@ -12,6 +12,9 @@
     <div class="hero hero__content">
       <div class="login-form">
         <h1>Sign Up</h1>
+        <p>
+          {{ message }}
+        </p>
           <form action='/signup' method="POST">
               <input type="text" class="text" name="username" placeholder="username" >
               <input type="password" name="password1" placeholder="password">
@@ -19,7 +22,7 @@
               <div class="submit">
                 <input type="submit" value="Sign Up" >
             </div>
-            <p><a href="">Back to login</a></p>
+            <p><a href="/">Back to login</a></p>
           </form>
         </div>
     </div>

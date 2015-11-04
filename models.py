@@ -36,13 +36,13 @@ class User(db.Model):
         if password:
             self.password = sha256_crypt.encrypt(password, rounds=12345)
 
-    def password_checking(self, password):
+    def check_password(self, password):
         if self.password is None:
             return False
         return sha256_crypt.verify(password, self.password)
 
-    def check_password(self, password):
-        authenticated = self.password_checking(password) if user else False
+    def authenticate(self, password):
+        authenticated = self.check_password(password) if user else False
 
         return authenticated
 

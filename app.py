@@ -1,14 +1,12 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import session
-from flask.ext.session import Session
 import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 app.config.from_object(__name__)
-Session(app)
 
 from models import *
 
@@ -24,6 +22,8 @@ def task_belongs_to_list(list_id, task_id):
     item = Task.query.filter_by(id = task_id).first()
     return list_id == item.list_id
 
+#LOGGING IN
+
 @app.route("/", methods=['GET'])
 def hello():
     if not session.get('user_id'):
@@ -33,7 +33,7 @@ def hello():
 @app.route("/", methods=['POST'])
 def login():
     if not request.form['username'] or not request.form['password']:
-        return render_template('login.html', title="Login")
+        return render_template('login.html', title="Login", message='Fields cannot be empty')
     else:
         user = User.query.filter_by(username=request.form['username']).first()
         if not user:
@@ -42,13 +42,38 @@ def login():
             session['user_id'] = user.id
             return redirect(url_for('/lists'))
 
+#SIGNING UP
 
+@app.route('/signup', methods=['GET'])
+def signup():
+    if not session.get('user_id'):
+        return render_template('signup.html', title="Signup")
+    return redirect(url_for('/lists'))
+
+
+@app.route('/signup', methods=['POST'])
+def new_user():
+    if not request.form['username'] or not request.form['password1'] or not request.form['password2']:
+        return render_template('signup.html', title="Signup", message='Fields cannot be empty')
+    if not (request.form['password1'] == request.form['password2']):
+        return render_template('signup.html', title="Signup", message='Passwords do not match')
+    user = User()
+    user.username = request.form['username']
+    user.set_password(request.form['password1'])
+    db.session.add(user)
+    db.session.commit()
+
+    session['user_id'] = user.id
+    return redirect(url_for('lists'))
+    #return render_template('signup.html', title="Signup", message='Something went wrong')
 #CODE FOR LISTS
 
 @app.route("/lists", methods=['GET'])
 def show_lists():
     check_login()
     lists = List.query.filter_by(user_id=session.get('user_id'))
+    if not lists:
+        render_template('lists.html', title='Lists', message='No lists here...')
     return render_template('lists.html', title="Lists", lists=lists)
 
 @app.route('/lists', methods=['POST'])
@@ -126,4 +151,5 @@ def edit_item():
 
 
 if __name__ == "__main__":
+    app.secret_key="SUPER SECRET SHHHHHH"
     app.run()
