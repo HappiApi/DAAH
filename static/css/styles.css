@@ -160,3 +160,94 @@ color: #818992;
 #new_list input[type="text"]:hover{
  	border:1px solid #949494;
  }
+
+/* ITEMS CSS */
+
+.items ul{
+  margin-left: 0em !important;
+  margin-bottom: 0em !important;
+}
+
+/*TO DO: CHANGE THE EDIT/DELETE POSITION */
+
+.item{
+  list-style-type: none;
+  background:#eee;
+  width: 100%;
+  margin:2% auto;
+  position: relative;
+  border-radius: 10px;
+  padding: auto;
+}
+
+.item a:hover {
+  text-decoration: none;
+}
+
+.item .item-name {
+  font-size: 30px;
+  padding-left: 20px;
+  color: #000;
+  width: 70%;
+  display: inline-block;
+}
+
+.item .item-name:hover {
+  color: #666666;
+}
+
+.item .item-edit {
+  font-size: 25px;
+  color: #03A136;
+  width: 10%;
+  display: inline-block;
+}
+
+.item .item-edit:hover {
+  color: #0E7D32;
+}
+
+.item .item-delete {
+  font-size: 25px;
+  color: #C12727;
+  display: inline-block;
+  padding-right: 1%;
+}
+
+.item .item-delete:hover {
+  color: #9E0000;
+}
+
+/* NEW ITEM CSS */
+#new_item input[type="submit"]{
+  display:block;
+  margin-left: auto;
+  margin-right:auto;
+	background: #ff5a5f;
+	color: #ECECEC;
+	font-size: 20px;
+	outline: none;
+	border: none;
+	font-weight:500;
+	border-radius: 5px;
+}
+
+#new_item input[type="submit"]:hover{
+	background:#C7494D;
+	color:#fff;
+}
+
+#new_item input[type="text"] {
+	text-align:left;
+	position: relative;
+	width:60%;
+	color: #676767;
+	font-weight:300;
+	font-size: 16px;
+	border-radius: 5px;
+	border:1px solid #DED6D6;
+}
+
+#new_item input[type="text"]:hover{
+ 	border:1px solid #949494;
+ }

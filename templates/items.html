@@ -5,20 +5,28 @@
 
     <nav class="breadcrumb clearfix">
       <ul class="breadcrumb__list">
-        <li class="breadcrumb__item"><a href="lists.html">Lists</a>
+        <li class="breadcrumb__item"><a href="/lists">Lists</a>
         </li>
-        <li class="breadbrumb__item">{{list_name}}
+        <li class="breadbrumb__item" style="font-size: 20px">{{list_name}}
         </li>
       </ul>
-      <a href="" style="float: right;">Logout</a>
-      <a href="" style="float: right; padding-right: 50px;">Add Item</a>
+      <a href="/" style="float: right;">Logout</a>
+      <a href="/newitem" style="float: right; padding-right: 50px;">Add Item</a>
     </nav>
 
     <div class="items">
       <ul>
+<!-- Sample item -->
+        <li class="item">
+          <a class="item-name" href>Item</a>
+          <a class="item-edit" href="Edit">Edit</a>
+          <a class="item-delete" href="Delete">Delete</a>
+          <a class="item-done" href="Done">Done</a>
+        </li>
+<!-- End of sample item -->
       {% for item in items %}
         <li class="item">
-          <a class="item-name" href>{{ list.name }}</a>
+          <a class="item-name" href>{{ item.name }}</a>
           <a class="item-edit" href="">Edit</a>
           <a class="item-delete" href="">Delete</a>
           <a class="item-done" href="">Done</a>

@@ -14,14 +14,19 @@
         <h1>Login</h1>
           <form method="POST">
               <input type="text" class="text" name="username" placeholder="username">
-              <input type="password" name="password" placeholder="••••••••••">
+              <fieldset class="form__group">
+                <input type="password" name="password" placeholder="••••••••••">
+                <em class="error"> {{ message }} </em>
+              </fieldset>
               <div class="submit">
                 <input type="submit" value="Login" >
             </div>
-            <p><a href="">Sign up</a></p>
+            <p><a href='/signup'>Sign up</a></p>
           </form>
         </div>
     </div>
 
   </div>
 {% include 'footer.html' %}
+
+

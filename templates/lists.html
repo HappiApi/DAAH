@@ -7,13 +7,18 @@
       <ul class="breadcrumb__list">
         <li class="breadcrumb__item" style="font-size: 20px;">Lists
         </li>
-        <li class="breadcrumb__item" style="font-size: 20px">
-          {{ list_name }}
-        </li>
       </ul>
-      <a href="" style="float: right;">Logout</a>
-      <a href="" style="float: right; padding-right: 50px;">Add Item</a>
+      <a href="/" style="float: right;">Logout</a>
+      <a href="/newlist" style="float: right; padding-right: 50px;">Add List</a>
     </nav>
+
+<!-- Sample list -->
+        <li class="list">
+          <a class="list-name" href>List Name</a>
+          <a class="list-edit" href="Edit">Edit</a>
+          <a class="list-delete" href="Delete">Delete</a>
+        </li>
+<!-- End of sample list -->
 
     <div class="lists">
       <ul>
@@ -32,3 +37,5 @@
 </div>
 
 {% include 'footer.html' %}
+
+<!-- {{ message }} -->
