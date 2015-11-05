@@ -37,14 +37,7 @@ class User(db.Model):
             self.password = sha256_crypt.encrypt(password, rounds=12345)
 
     def check_password(self, password):
-        if self.password is None:
-            return False
         return sha256_crypt.verify(password, self.password)
-
-    def authenticate(self, password):
-        authenticated = self.check_password(password) if user else False
-
-        return authenticated
 
     def __repr__(self):
         return '<User %r>' % (self.username)

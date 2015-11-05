@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, redirect, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import session
 import os
@@ -9,10 +9,6 @@ db = SQLAlchemy(app)
 app.config.from_object(__name__)
 
 from models import *
-
-def check_login():
-    if not session.get('user_id'):
-        return redirect(url_for('/'))
 
 def list_belongs_to_user(list_id):
     list = List.query.filter_by(id = list_id).first()
@@ -28,7 +24,7 @@ def task_belongs_to_list(list_id, task_id):
 def hello():
     if not session.get('user_id'):
         return render_template('login.html', title="Login")
-    return redirect(url_for('/lists'))
+    return redirect('/lists')
 
 @app.route("/", methods=['POST'])
 def login():
@@ -38,9 +34,10 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
         if not user:
             return render_template('login.html', title="Login", message='User not found')
-        if not user.authenticate(request.form['password']):
+        if  user.check_password(request.form['password']):
             session['user_id'] = user.id
-            return redirect(url_for('/lists'))
+            return redirect('/lists')
+    return render_template('login.html', title="Login", message='Something went wrong')
 
 #SIGNING UP
 
@@ -48,7 +45,7 @@ def login():
 def signup():
     if not session.get('user_id'):
         return render_template('signup.html', title="Signup")
-    return redirect(url_for('/lists'))
+    return redirect('/lists')
 
 
 @app.route('/signup', methods=['POST'])
@@ -64,13 +61,23 @@ def new_user():
     db.session.commit()
 
     session['user_id'] = user.id
-    return redirect(url_for('lists'))
+    return redirect('/lists')
     #return render_template('signup.html', title="Signup", message='Something went wrong')
+
+#LOGGING OUT
+@app.route('/logout')
+def logout():
+    if not session.get('user_id'):
+      return redirect('/')
+    session.pop('user_id', None)
+    return redirect('/')
+
 #CODE FOR LISTS
 
 @app.route("/lists", methods=['GET'])
 def show_lists():
-    check_login()
+    if not session.get('user_id'):
+        return redirect('/')
     lists = List.query.filter_by(user_id=session.get('user_id'))
     if not lists:
         render_template('lists.html', title='Lists', message='No lists here...')
@@ -78,7 +85,8 @@ def show_lists():
 
 @app.route('/lists', methods=['POST'])
 def new_list():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     list = List(request.form['name'], session.get('user_id'))
     db.session.add(list)
     db.session.commit()
@@ -89,7 +97,8 @@ def new_list():
 
 @app.route('/lists/<list_id>', methods=['DELETE'])
 def delete_list():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     if list_belongs_to_user(request.form[list_id]):
         list = List.query.filter_by(id = list_id).first()
         db.session.delete(list)
@@ -102,7 +111,8 @@ def delete_list():
 
 @app.route("/lists/<list_id>", methods=['POST'])
 def edit_list():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     if list_belongs_to_user(list_id):
         list = Lists.query.filter_by(id = list_id).first()
         list.name = request.form['list_name']
@@ -113,19 +123,23 @@ def edit_list():
         lists = List.query.filter_by(user_id=session.get('user_id'))
         return render_template('lists.html', title='Lists', lists=lists, message='An error occured')
 
+#TASKS
+
 #Displays tasks in list
 @app.route("/lists/<list_id>", methods=['GET'])
 def show_list():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     if list_belongs_to_user(list_id):
         tasks = Task.query.filter_by(list_id=list_id)
         return render_template('items.html', title='Tasks', items=tasks)
     else:
-        return redirect(url_for('/lists'))
+        return redirect('/lists')
 
 @app.route("/list/<list_id>/task/<task_id>", methods=['POST'])
 def delete_item():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     if list_belongs_to_user(list_id) and task_belongs_to_list(list_id, task_id):
         task = Task.query.filter_by(id = task_id).first()
         db.session.delete(task)
@@ -138,7 +152,8 @@ def delete_item():
 
 @app.route("/list/<list_id>/task/<task_id>", methods=['POST'])
 def edit_item():
-    check_login()
+    if not session.get('user_id'):
+      return redirect('/')
     if list_belongs_to_user(list_id) and task_belongs_to_list(list_id, task_id):
         task = Task.query.filter_by(id = task_id).first()
         task.name = request.form['list_name']
@@ -148,7 +163,6 @@ def edit_item():
     else:
         tasks = Task.query.filter_by(list_id=list_id)
         return render_template('items.html', title='Tasks', items=tasks, message='An error occured')
-
 
 if __name__ == "__main__":
     app.secret_key="SUPER SECRET SHHHHHH"
