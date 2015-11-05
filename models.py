@@ -65,11 +65,13 @@ class Task(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String())
+    done=db.Column(db.Boolean)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'))
 
-    def __init__(self, name, list):
+    def __init__(self, name, list,done=False):
         self.name = name
         self.list_id = list.id
+        self.done = done
 
     def __repr__(self):
         return '<Task %r>' % (self.name)

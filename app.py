@@ -95,7 +95,7 @@ def new_list():
     return render_template('lists.html', title='Lists', lists=lists, message="Successfully created list")
 
 
-@app.route('/lists/<list_id>', methods=['DELETE'])
+@app.route('/list/<list_id>', methods=['DELETE'])
 def delete_list():
     if not session.get('user_id'):
       return redirect('/')
@@ -109,7 +109,7 @@ def delete_list():
         lists = List.query.filter_by(user_id=session.get('user_id'))
         return render_template('lists.html', title='Lists', lists=lists, message='An error occured')
 
-@app.route("/lists/<list_id>", methods=['POST'])
+@app.route("/list/<list_id>", methods=['POST'])
 def edit_list():
     if not session.get('user_id'):
       return redirect('/')
@@ -126,7 +126,7 @@ def edit_list():
 #TASKS
 
 #Displays tasks in list
-@app.route("/lists/<list_id>", methods=['GET'])
+@app.route("/list/<list_id>", methods=['GET'])
 def show_list():
     if not session.get('user_id'):
       return redirect('/')
@@ -163,6 +163,33 @@ def edit_item():
     else:
         tasks = Task.query.filter_by(list_id=list_id)
         return render_template('items.html', title='Tasks', items=tasks, message='An error occured')
+
+@app.route("/list/<list_id>/new_task", methods=['POST'])
+def new_item():
+    if not session.get('user_id'):
+      return redirect('/')
+    if list_belongs_to_user(list_id):
+        task = List(request.form['name'], list_id)
+        db.session.add(task)
+        db.session.commit()
+        tasks = Task.query.filter_by(list_id=list_id)
+        return render_template('items.html', title='Tasks', items=tasks, message='Added task')
+    tasks = Task.query.filter_by(list_id=list_id)
+    return render_template('items.html', title='Tasks', items=tasks, message='An error occured')
+
+@app.route("/list/<list_id>/task/<task_id>/done", methods=['POST'])
+def mark_task_done():
+    if not session.get('user_id'):
+      return redirect('/')
+    if list_belongs_to_user(list_id) and task_belongs_to_list(list_id, task_id):
+        task = Task.query.filter_by(id = task_id).first()
+        task.done = True
+        db.session.commit()
+
+        tasks = Task.query.filter_by(list_id=list_id)
+        return render_template('items.html', title='Tasks', items=tasks, message='Successfully edited task')
+    tasks = Task.query.filter_by(list_id=list_id)
+    return render_template('items.html', title='Tasks', items=tasks, message='An error occured')
 
 if __name__ == "__main__":
     app.secret_key="SUPER SECRET SHHHHHH"
