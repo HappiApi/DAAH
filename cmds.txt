@@ -1,0 +1,82 @@
+   1  passwd
+    2  ls -a
+    3  more
+    4  perl5 more
+    5  more perl5
+    6  more .emacs
+    7  more perl5
+    8  pwd
+    9  cd /
+   10  ls
+   11  ls -a
+   12  cd home/
+   13  ls
+   14  su
+   15  sudo /bin/bash
+   16  passed
+   17  passwd
+   18  pwd
+   19  rpm -Uvh http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+   20  sudo rpm -Uvh http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+   21  yum update
+   22  sudo yum update
+   23  yum install postgresql94-server postgresql94-contrib postgresql94-libs postgresql94-devel
+   24  sudo yum install postgresql94-server postgresql94-contrib postgresql94-libs postgresql94-devel
+   25  pwd
+   26  cd /usr/
+   27  ls
+   28  pwd
+   29  ls /home
+   30  cd /home
+   31  ls
+   32  pwd
+   33  /usr/pgsql-9.4/bin/postgresql94-setup initdb
+   34  sudo /usr/pgsql-9.4/bin/postgresql94-setup initdb
+   35  systemctl rt postgresql-9.4
+   36  systemctl start postgresql-9.4
+   37  sudo systemctl start postgresql-9.4
+   38  sudo -u postgres psql postgres
+   39  sudo /bin/bash
+   40  mkdir ~/daah
+   41  cd ~/daah
+   42  virtualenv venv
+   43  source venv/bin/activate
+   44  pip install uwsgi flask
+   45  git
+   46  git clone https://github.com/HappiApi/DAAH.git
+   47  ls
+   48  rm -rf DAAH/
+   49  cd ..
+   50  git clone https://github.com/HappiApi/DAAH.git daah
+   51  rm -rf venv
+   52  deactivate
+   53  cd ..
+   54  ls
+   55  pwd
+   56  cd localuser/
+   57  ls
+   58  cd daah/
+   59  ls
+   60  rm -rf daah
+   61  ls
+   62  cd ..
+   63  ls
+   64  rm -rf daah/
+   65  ls
+   66  git clone https://github.com/HappiApi/DAAH.git daah
+   67  ls
+   68  cd daah/
+   69  virtualenv venv
+   70  source venv/bin/actiavet
+   71  source venv/bin/activate
+   72  ls
+   73  git branch
+   74  git checkout back-end 
+   75  python app.py
+   76  pip install -r requirements.txt 
+   77  nano venv/bin/activate
+   78  python app.py
+   79  deactivate
+   80  source venv/bin/activate
+   81  python app.py
+   82  history
