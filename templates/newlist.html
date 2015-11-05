@@ -5,23 +5,34 @@
 
     <nav class="breadcrumb clearfix">
       <ul class="breadcrumb__list">
-        <li class="breadcrumb__item" style="font-size: 20px;"><a href="">Lists</a>
+        <li class="breadcrumb__item" style="font-size: 20px;"><a href="/lists">Lists</a>
         </li>
         <li class=breadcrumb__item style="font-size: 20px;"> {{ title }}
         </li>
       </ul>
-      <a href="" style="float: right;">Logout</a>
-      <a href="" style="float: right; padding-right: 51px;">Cancel</a>
+      <a href="/logout" style="float: right;">Logout</a>
+      <a href="/lists" style="float: right; padding-right: 51px;">Cancel</a>
     </nav>
 
-    <form  id="new_list" action="" method="post">
-      <fieldset class="form__group form__group--prepend">
-          <span>Name of the new list:</span>
-          <input class="form__control" type="text" id="text">
-      </fieldset>
-      <input type="submit" value="Add List">
-    </form>
-
+    {% if list_id is not defined %}
+      <form  id="new_list" action="/lists" method="post">
+        <fieldset class="form__group form__group--prepend">
+            <span>Name of the new list:</span>
+            <input class="form__control" type="text" name="name" id="text">
+            <em class="error">{{ message }}</em>
+        </fieldset>
+        <input type="submit" name="submit" value="Add List">
+      </form>
+    {% else %}
+      <form  id="new_list" action="/lists/{{ list_id }}" method="post">
+        <fieldset class="form__group form__group--prepend">
+            <span>Name of the list:</span>
+            <input class="form__control" type="text" name="name" id="text" value="{{ list_name }}">
+            <em class="error">{{ message }}</em>
+        </fieldset>
+        <input type="submit" name="submit" value="Edit List">
+      </form>
+    {% endif %}
   </div>
 </div>
 

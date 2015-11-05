@@ -68,9 +68,9 @@ class Task(db.Model):
     done=db.Column(db.Boolean)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'))
 
-    def __init__(self, name, list,done=False):
+    def __init__(self, name, list_id,done=False):
         self.name = name
-        self.list_id = list.id
+        self.list_id = list_id
         self.done = done
 
     def __repr__(self):

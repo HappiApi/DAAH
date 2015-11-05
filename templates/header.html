@@ -22,8 +22,8 @@
 	<meta property="og:profile_id" content="uclofficial"/>
 	<!-- end social meta -->
 
-	<link href="../static/css/screen.min.css" media="screen, projection" rel="stylesheet" type="text/css" />
-	<link href="../static/css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="{{ url_for('static', filename='css/screen.min.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+	<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" type="text/css" />
 
 	<!--[if IE]><link href="css/ie.min.css" rel="stylesheet" /><![endif]-->
 	<!--[if lt IE 8]><link href="css/ie-old.min.css" rel="stylesheet" /><![endif]-->
@@ -33,7 +33,7 @@
 	<meta name="msapplication-TileColor" content="#000000">
 	<meta name="msapplication-TileImage" content="favicon-144.png">
 
-	<script src="../static/js/lib/modernizr-custom.js"></script>
+	<script src="{{ url_for('static',filename='js/lib/modernizr-custom.js') }}"></script>
 
 	<script>
 		var cuttingTheMustard = document.querySelector && window.localStorage && window.addEventListener;
@@ -43,25 +43,28 @@
 		test : cuttingTheMustard
 		//if old browser load the shiv
 		,nope : [
-		'../static/js/lib/html5shiv-printshiv.min.js'
-		,'../static/js/lib/respond.min.js'
+		"{{ url_for('static', filename='js/lib/html5shiv-printshiv.min.js') }}"
+		,"{{ url_for('static', filename='js/lib/respond.min.js') }}"
 		]
 	});
 	//set conditional assets for main.js
 	var globalSiteSpecificVars = {
-		pathToJquery: '../static/js/lib/jquery-1.9.1.min'
+		pathToJquery: "{{ url_for('static', filename='js/lib/jquery-1.9.1.min') }}"
 		,googleAnalyticsIdsArray: []//specify array of site specific id's NOT UCL generic UA-943297-1
 	}
 	if(cuttingTheMustard){
-		globalSiteSpecificVars.pathToJquery = "../static/js/lib/jquery-2.1.1.min";
+		globalSiteSpecificVars.pathToJquery = "{{ url_for('static', filename='js/lib/jquery-2.1.1.min') }}";
 	}
 </script>
 
-<script src="../static/js/lib/require.min.js"></script>
-<script src="../static/js/main.js"></script>
+<script src="{{ url_for('static', filename='js/lib/require.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/jquery-2.1.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script>
 	require(["app/general","app/searchWithAutoComplete"]);//load the default stuff
 </script>
+
+
 
 <title> {{ 	title }} </title>
 
@@ -74,7 +77,7 @@
         <div class="brand">
           <p class="brand__heading">DAAH todo list</p>
           <span class="visually-hidden">Home</span>
-          <img src="../static/images/ucl-logo.svg" data-src="../static/images/ucl-logo.svg" alt="UCL logo" id="logo" class="brand__logo lazy">
+          <img src="{{ url_for('static', filename='images/ucl-logo.svg') }}" data-src="{{ url_for('static', filename='images/ucl-logo.svg') }}" alt="UCL logo" id="logo" class="brand__logo lazy">
         </div>
       </div>
       <!-- end .photograph -->
