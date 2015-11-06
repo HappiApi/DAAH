@@ -1,6 +1,10 @@
 from app import db
 from sqlalchemy.dialects.postgresql import JSON
 
+from passlib.hash import sha256_crypt
+
+#OLD USER CLASS
+"""
 class User(db.Model):
     __tablename__ = 'user'
 
@@ -14,6 +18,33 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+"""
+class User(db.Model):
+    __tablename__ = 'user'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(), index=True, unique=True)
+    password = db.Column('password', db.String(128))
+
+    def __init__(self, password=None):
+        self.password = password
+
+    def get_password(self):
+        return self.password
+
+    def set_password(self, password):
+        if password:
+            self.password = sha256_crypt.encrypt(password, rounds=12345)
+
+    def check_password(self, password):
+        return sha256_crypt.verify(password, self.password)
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
+
+    def get_id(self):
+        return str(self.username)
+
 
 class List(db.Model):
     __tablename__ = 'list'
@@ -22,9 +53,9 @@ class List(db.Model):
     name=db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, name, user):
+    def __init__(self, name, user_id):
         self.name = name
-        self.user_id = user.id
+        self.user_id = user_id
 
     def __repr__(self):
         return '<List %r>' % (self.name)
@@ -34,11 +65,13 @@ class Task(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String())
+    done=db.Column(db.Boolean)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'))
 
-    def __init__(self, name, list):
+    def __init__(self, name, list_id,done=False):
         self.name = name
-        self.list_id = list.id
+        self.list_id = list_id
+        self.done = done
 
     def __repr__(self):
         return '<Task %r>' % (self.name)

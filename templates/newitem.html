@@ -5,22 +5,37 @@
 
     <nav class="breadcrumb clearfix">
       <ul class="breadcrumb__list">
-        <li class="breadcrumb__item" style="font-size: 20px;"><a href="">Lists</a>
+        <li class="breadcrumb__item" style="font-size: 20px;"><a href="/lists">Lists</a>
         </li>
-        <li class=breadcrumb__item style="font-size: 20px;"> {{ title }}
+        <li class="breadcrumb__item" style="font-size: 20px;">
+          <a href="/lists/{{ list.id }}">{{ list.name }}</a>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--current" style="font-size: 20px;"> {{ title }}
         </li>
       </ul>
-      <a href="" style="float: right;">Logout</a>
-      <a href="" style="float: right; padding-right: 51px;">Cancel</a>
+      <a href="/logout" style="float: right;">Logout</a>
+      <a href="/lists/{{ list.id }}" style="float: right; padding-right: 51px;">Cancel</a>
     </nav>
 
-    <form  id="new_item" action="" method="post">
-      <fieldset class="form__group form__group--prepend">
-          <span>Name of the new item:</span>
-          <input class="form__control" type="text" id="text">
-      </fieldset>
-      <input type="submit" value="Add Item">
-    </form>
+    {% if task is not defined %}
+      <form  id="new_list" action="/lists/{{ list.id }}/newtask" method="post">
+        <fieldset class="form__group form__group--prepend">
+            <span>Name of the new item:</span>
+            <input class="form__control" type="text" name="name" id="text">
+            <em class="error">{{ message }}</em>
+        </fieldset>
+        <input type="submit" name="submit" value="Add Item">
+      </form>
+    {% else %}
+      <form  id="new_list" action="/lists/{{ list.id }}/tasks/{{ task.id }}" method="post">
+        <fieldset class="form__group form__group--prepend">
+            <span>Name of the item:</span>
+            <input class="form__control" type="text" name="name" id="text" value="{{ task.name }}">
+            <em class="error">{{ message }}</em>
+        </fieldset>
+        <input type="submit" name="submit" value="Edit Task">
+      </form>
+    {% endif %}
 
   </div>
 </div>

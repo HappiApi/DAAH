@@ -7,21 +7,18 @@
       <ul class="breadcrumb__list">
         <li class="breadcrumb__item" style="font-size: 20px;">Lists
         </li>
-        <li class="breadcrumb__item" style="font-size: 20px">
-          {{ list_name }}
-        </li>
       </ul>
-      <a href="" style="float: right;">Logout</a>
-      <a href="" style="float: right; padding-right: 50px;">Add Item</a>
+      <a href="/logout" style="float: right;">Logout</a>
+      <a href="/newlist" style="float: right; padding-right: 50px;">Add List</a>
     </nav>
 
     <div class="lists">
       <ul>
       {% for list in lists %}
         <li class="list">
-          <a class="list-name" href>{{ list.name }}</a>
-          <a class="list-edit" href="">Edit</a>
-          <a class="list-delete" href="">Delete</a>
+          <a class="list-name" href="/lists/{{ list.id }}">{{ list.name }}</a>
+          <a class="list-edit" href="/editlist/{{ list.id }}">Edit</a>
+          <a class="list-delete" onclick="$.ajax({ url: '/lists/{{ list.id }}', method: 'DELETE' })" href="">Delete</a>
         </li>
       {% endfor %}
       </ul>
