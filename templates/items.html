@@ -13,7 +13,7 @@
       <a href="/logout" style="float: right;">Logout</a>
       <a href="/lists/{{ list.id }}/newtask" style="float: right; padding-right: 50px;">Add Item</a>
     </nav>
-
+    <em class="error" style="color: green"> {{ message }}</em>
     <div class="lists">
       <ul>
       {% for item in items %}

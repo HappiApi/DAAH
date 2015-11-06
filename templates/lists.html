@@ -11,7 +11,7 @@
       <a href="/logout" style="float: right;">Logout</a>
       <a href="/newlist" style="float: right; padding-right: 50px;">Add List</a>
     </nav>
-
+    <em class="error" style="color: green"> {{ message }}</em>
     <div class="lists">
       <ul>
       {% for list in lists %}
