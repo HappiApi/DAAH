@@ -63,7 +63,7 @@ deactivate
 #copy in nginx conf file
 sudo usermod -a -G `whoami` nginx
 chmod 710 /home/`whoami`
-sudo -u nginx cp nginx.conf /etc/nginx/nginx.conf
+sudo cp nginx.conf /etc/nginx/nginx.conf
 sudo systemctl enable nginx
 sudo systemctl start nginx
 
