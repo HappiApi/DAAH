@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=localuser
+Group=nginx
+WorkingDirectory=/home/localuser/daah
+ExecStart=/home/localuser/daah/venv/bin/gunicorn --bind 127.0.0.1:8080 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
