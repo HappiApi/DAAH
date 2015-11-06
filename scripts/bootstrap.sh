@@ -40,4 +40,10 @@ source ~/.bash_profile
 sudo /bin/bash && sudo -u postgres psql postgres -c "CREATE USER localuser WITH PASSWORD 'localuser'; GRANT ALL PRIVILEGES ON DATABASE postgres TO localuser; ALTER DATABASE postgres OWNER TO localuser; "
 source venv/bin/activate
 
+# schedule backup
+sudo crontab -l > mycron
+echo "0 1 * * * bash ~/DAAH/scripts/backup.sh" >> mycron
+crontab mycron
+rm mycron
+
 # pip3 install uwsgi
